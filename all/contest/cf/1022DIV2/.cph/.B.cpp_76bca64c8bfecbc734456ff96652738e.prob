@@ -1,0 +1,1 @@
+{"name":"Local: B","url":"e:\\code\\contest\\cf\\1022DIV2\\B.cpp","tests":[{"id":1746167375341,"input":"8\n2 1\n3 6\n1 0\n2 0\n5 0\n2 27\n15 43\n12345678 9101112\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\contest\\cf\\1022DIV2\\B.cpp","group":"local","local":true}

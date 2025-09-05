@@ -1,0 +1,1 @@
+{"name":"Local: dboj_reverse","url":"e:\\code\\c\\program_algorithm\\Hash\\dboj_reverse.cpp","tests":[{"id":1735904865591,"input":"4\n40000 200 3000 10\n\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\c\\program_algorithm\\Hash\\dboj_reverse.cpp","group":"local","local":true}

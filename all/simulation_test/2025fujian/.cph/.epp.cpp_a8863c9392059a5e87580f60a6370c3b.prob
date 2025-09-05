@@ -1,0 +1,1 @@
+{"name":"Local: epp","url":"e:\\code\\simulation_test\\2025fujian\\epp.cpp","tests":[{"id":1752322019909,"input":"1\n7\n14 95 34 68 3 35 67 97 66 46 56 47 55 1 ","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\simulation_test\\2025fujian\\epp.cpp","group":"local","local":true}

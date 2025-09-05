@@ -1,0 +1,1 @@
+{"name":"Local: dp","url":"e:\\code\\contest\\cf\\edu179\\dp.cpp","tests":[{"id":1748967177922,"input":"3\n2 4\n479 290 478 293\n1 1\n31415\n6 10\n479 385 290 293 384 383 297 478 291 382\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\contest\\cf\\edu179\\dp.cpp","group":"local","local":true}

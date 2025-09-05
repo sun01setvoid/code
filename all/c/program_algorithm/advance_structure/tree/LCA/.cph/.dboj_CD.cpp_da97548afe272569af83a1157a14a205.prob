@@ -1,0 +1,1 @@
+{"name":"Local: dboj_CD","url":"e:\\code\\c\\program_algorithm\\LCA\\dboj_CD.cpp","tests":[{"id":1737882063408,"input":"2\n3 1\nB A\nC A\nB C\n\n3 2\nB A\nC B\nA C\nC A","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\c\\program_algorithm\\LCA\\dboj_CD.cpp","group":"local","local":true}

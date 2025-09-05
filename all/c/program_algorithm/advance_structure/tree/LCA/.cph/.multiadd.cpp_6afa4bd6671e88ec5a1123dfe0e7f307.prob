@@ -1,0 +1,1 @@
+{"name":"Local: multiadd","url":"e:\\code\\c\\program_algorithm\\LCA\\multiadd.cpp","tests":[{"id":1737700417609,"input":"10\n234 -1\n12 234\n13 234\n14 234\n15 234\n16 234\n17 234\n18 234\n19 234\n233 19\n1\n234 234","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\c\\program_algorithm\\LCA\\multiadd.cpp","group":"local","local":true}

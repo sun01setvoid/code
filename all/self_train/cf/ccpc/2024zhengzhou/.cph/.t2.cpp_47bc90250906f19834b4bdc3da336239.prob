@@ -1,0 +1,1 @@
+{"name":"Local: t2","url":"e:\\code\\self_train\\cf\\ccpc\\zhengzhou\\t2.cpp","tests":[{"id":1755405553516,"input":"3 10 5\n2 4\n3 1\n10 7\n2 2\n7 1\n4 3\n5 2\n28 3\n","output":"\n"}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\self_train\\cf\\ccpc\\zhengzhou\\t2.cpp","group":"local","local":true}

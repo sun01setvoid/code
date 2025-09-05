@@ -1,0 +1,1 @@
+{"name":"Local: e","url":"e:\\code\\self_train\\cf\\icpc\\nanjing\\e.cpp","tests":[{"id":1756010852853,"input":"4\n21 10\njingicpcnanjingsuanan\n21 0\njingicpcnanjingsuanan\n21 3\nnanjingnanjingnanjing\n4 100\nicpc\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\self_train\\cf\\icpc\\nanjing\\e.cpp","group":"local","local":true}

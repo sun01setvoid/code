@@ -1,0 +1,1 @@
+{"name":"Local: j","url":"e:\\code\\self_train\\cf\\2024icpc_kunming\\j.cpp","tests":[{"id":1754804944219,"input":"3\n2 Alice\n2 1\n3 Bob\n1 3 2\n10 Bob\n1 2 3 4 5 6 7 8 10 9\n","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\self_train\\cf\\2024icpc_kunming\\j.cpp","group":"local","local":true}
