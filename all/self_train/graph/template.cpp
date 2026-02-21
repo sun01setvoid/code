@@ -1,17 +1,16 @@
-﻿#include <bits/stdc++.h>
+﻿
+#include <bits/stdc++.h>
 using namespace std;
 typedef unsigned long long ull;
 #define endl '\n'
-#define rep(i, st, en) for (int i = (st); i <= (en); ++i)
-#define drep(i, st, en) for (int i = (st); i >= (en); --i)
 #define debug(x) cerr << #x << '=' << (x) << endl
 #define fi first
 #define se second
+#define pb push_back
 #define int long long
 #define vii vector<int>
 #define pii pair<int, int>
 #define pb push_back
-#define eb emplace_back
 #define IOS                      \
     ios::sync_with_stdio(false); \
     cin.tie(0)

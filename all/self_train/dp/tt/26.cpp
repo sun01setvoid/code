@@ -1,4 +1,5 @@
-﻿#include <bits/stdc++.h>
+﻿//P1273 有线电视网
+#include <bits/stdc++.h>
 using namespace std;
 typedef unsigned long long ull;
 #define endl '\n'

@@ -1,58 +1,86 @@
-﻿#include <iostream>
-#include <vector>
+﻿#include <bits/stdc++.h>
 using namespace std;
-
-vector<int> shiftLeft(const vector<int> &a, int shift) {
+vector<int> div(const vector<int> &A, int b, int &r)
+{
+    vector<int> C;
+    for (int i = A.size() - 1; i >= 0; i--)
+    {
+        r = r * 10 + A[i];
+        C.push_back(r / b);
+        r %= b;
+    }
+    reverse(C.begin(), C.end());
+    while (C.size() > 1 && C.back() == 0)
+        C.pop_back();
+    return C;
+}
+vector<int> shiftLeft(const vector<int> &a, int shift)
+{
     vector<int> result(a);
     result.insert(result.begin(), shift, 0);
     return result;
 }
 
-vector<int> mul(const vector<int> &A, int b) {
+vector<int> mul(const vector<int> &A, int b)
+{
     vector<int> C;
     int t = 0;
-    for (int i = 0; i < A.size() || t; ++i) {
-        if (i < A.size()) t += A[i] * b;
+    for (int i = 0; i < A.size() || t; ++i)
+    {
+        if (i < A.size())
+            t += A[i] * b;
         C.push_back(t % 10);
         t /= 10;
     }
-    while (C.size() > 1 && C.back() == 0) C.pop_back();
+    while (C.size() > 1 && C.back() == 0)
+        C.pop_back();
     return C;
 }
 
-vector<int> add(const vector<int> &A, const vector<int> &B) {
+vector<int> add(const vector<int> &A, const vector<int> &B)
+{
     vector<int> C;
     int t = 0;
-    for (int i = 0; i < A.size() || i < B.size() || t; ++i) {
-        if (i < A.size()) t += A[i];
-        if (i < B.size()) t += B[i];
+    for (int i = 0; i < A.size() || i < B.size() || t; ++i)
+    {
+        if (i < A.size())
+            t += A[i];
+        if (i < B.size())
+            t += B[i];
         C.push_back(t % 10);
         t /= 10;
     }
     return C;
 }
 
-vector<int> sub(const vector<int> &A, const vector<int> &B) {
+vector<int> sub(const vector<int> &A, const vector<int> &B)
+{
     vector<int> C;
     int t = 0;
-    for (int i = 0; i < A.size(); ++i) {
+    for (int i = 0; i < A.size(); ++i)
+    {
         t = A[i] - t;
-        if (i < B.size()) t -= B[i];
+        if (i < B.size())
+            t -= B[i];
         C.push_back((t + 10) % 10);
         t = t < 0 ? 1 : 0;
     }
-    while (C.size() > 1 && C.back() == 0) C.pop_back();
+    while (C.size() > 1 && C.back() == 0)
+        C.pop_back();
     return C;
 }
 
-vector<int> karatsuba(const vector<int> &a, const vector<int> &b) {
-    if (a.size() <= 8) {
+vector<int> karatsuba(const vector<int> &a, const vector<int> &b)
+{
+    if (a.size() <= 8)
+    {
         int tmp = 0;
         for (int i = a.size() - 1; i >= 0; --i)
             tmp = tmp * 10 + a[i];
         return mul(b, tmp);
     }
-    if (b.size() <= 8) {
+    if (b.size() <= 8)
+    {
         int tmp = 0;
         for (int i = b.size() - 1; i >= 0; --i)
             tmp = tmp * 10 + b[i];
@@ -61,7 +89,7 @@ vector<int> karatsuba(const vector<int> &a, const vector<int> &b) {
 
     int n = max(a.size(), b.size());
     // 填充到n位以确保分解正确
-    //不写就错？？？？
+    // 不写就错？？？？
     vector<int> a_padded(a), b_padded(b);
     a_padded.resize(n, 0);
     b_padded.resize(n, 0);
@@ -83,11 +111,12 @@ vector<int> karatsuba(const vector<int> &a, const vector<int> &b) {
     vector<int> z1_z0 = sub(z1, z0);
     vector<int> z1_z0_z2 = sub(z1_z0, z2);
 
-    vector<int> result = add(add(shiftLeft(z2, 2 * half),shiftLeft(z1_z0_z2, half)), z0);
+    vector<int> result = add(add(shiftLeft(z2, 2 * half), shiftLeft(z1_z0_z2, half)), z0);
     return result;
 }
 
-int main() {
+int main()
+{
     string a, b;
     cin >> a >> b;
     vector<int> A, B;

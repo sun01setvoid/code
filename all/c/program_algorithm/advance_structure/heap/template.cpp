@@ -25,7 +25,7 @@ void up(int u)
 int main()
 {
     scanf("%d%d", &n, &m);
-    for (int i = 1; i <= n; i ++ ) scanf("%d", &h[i]);
+    for (int i = 1; i <= n; i ++ ) scanf("%d", &h[i]); //O(n)建堆，sum(层节点*据底层的层数)=O((n+1)/2)
     cnt = n;
     for (int i = n / 2; i; i -- ) down(i);//把上面的down 一下就好
     while (m -- )
@@ -35,6 +35,6 @@ int main()
         down(1);
     }
     puts("");
-
     return 0;
 }
+//删中间的话，先up(k)再down(k)

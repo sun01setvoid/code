@@ -1,0 +1,1 @@
+{"name":"Local: 27","url":"e:\\code\\all\\self_train\\graph\\27.cpp","tests":[{"id":1760449450125,"input":"6 4  \n1 2  \n2 3  \n2 4 \n4 5\n5 6\n4 5 6\n6 3 1\n2 4 4 \n6 6 6","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\all\\self_train\\graph\\27.cpp","group":"local","local":true}

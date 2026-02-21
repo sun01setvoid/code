@@ -1,7 +1,11 @@
-﻿//为什么奇数偶数是这样的前后缀？？？
+﻿// 为什么奇数偶数是这样的前后缀？？？
+//起始就是前面和后面，由左边的偶数和右边的奇数组成他的祖先
+//时间复杂度O(nlogn+qlognlogV+qlogV)
+//高斯消元的话提取线性基做高斯消元是（logV)^2
+// 查区间可用线性基
 #pragma GCC optimize(2)
 #include <bits/stdc++.h>
-#define ll long long
+#define int long long
 using namespace std;
 const int N = 131072 * 2 + 10;
 const int K = 30;
@@ -9,174 +13,235 @@ const int K = 30;
 int n, tim, m;
 int dfn[N], sz[N], lg2[N], to_tree_id[N];
 vector<int> e[N];
-struct Hamel_pre {  //存更后面的
-    ll t[K];int p[K]; 
-    void init() { 
-        memset(t, 0, sizeof(t)); 
-        memset(p, 0, sizeof(p)); 
-    } 
-    void insert(ll x, int pos) { //存更前面的
-        for (int i = K - 1; i >= 0; --i) { 
-            if ((x >> i) & 1) { 
-                if (!t[i]){
+struct Hamel_pre
+{ // 存更后面的
+    int t[K];
+    int p[K];
+    void init()
+    {
+        memset(t, 0, sizeof(t));
+        memset(p, 0, sizeof(p));
+    }
+    void insert(int x, int pos)
+    { // 存更前面的
+        for (int i = K - 1; i >= 0; --i)
+        {
+            if ((x >> i) & 1)
+            {
+                if (!t[i])
+                {
                     t[i] = x;
                     p[i] = pos;
                     return;
-                }else
-                if (pos > p[i]) { 
-                    swap(t[i], x); 
+                }
+                else if (pos > p[i])
+                {
+                    swap(t[i], x);
                     swap(p[i], pos);
-                } 
-                x ^= t[i]; 
-            } 
-        } 
-    } 
-}hamel_pre[N << 1];  
-struct Hamel_suf {  
-    ll t[K];int p[K]; 
-    void init() { 
-        memset(t, 0, sizeof(t)); 
-        memset(p, 0, sizeof(p)); 
-    } 
-    void insert(ll x, int pos) { 
-        for (int i = K - 1; i >= 0; --i) { 
-            if ((x >> i) & 1) { 
-                if (!t[i]){
+                }
+                x ^= t[i];
+            }
+        }
+    }
+} hamel_pre[N << 1];
+struct Hamel_suf
+{
+    int t[K];
+    int p[K];
+    void init()
+    {
+        memset(t, 0, sizeof(t));
+        memset(p, 0, sizeof(p));
+    }
+    void insert(int x, int pos)
+    {
+        for (int i = K - 1; i >= 0; --i)
+        {
+            if ((x >> i) & 1)
+            {
+                if (!t[i])
+                {
                     t[i] = x;
                     p[i] = pos;
                     return;
-                }else
-                if (pos < p[i]) { 
-                    swap(t[i], x); 
+                }
+                else if (pos < p[i])
+                {
+                    swap(t[i], x);
                     swap(p[i], pos);
-                } 
-                x ^= t[i]; 
-            } 
-        } 
-    } 
-}hamel_suf[N << 1]; 
-void dfs(int u, int fa){
+                }
+                x ^= t[i];
+            }
+        }
+    }
+} hamel_suf[N << 1];
+void dfs(int u, int fa)
+{
     sz[u] = 1;
     dfn[u] = ++tim;
-    for (auto v: e[u]) {
-        if (v == fa) continue;
+    for (auto v : e[u])
+    {
+        if (v == fa)
+            continue;
         dfs(v, u);
         sz[u] += sz[v];
     }
 }
-void build(int rt, int l, int r){
+void build(int rt, int l, int r)
+{
     if (rt % 2 != 0)
         hamel_suf[rt].init();
-    else    
+    else
         hamel_pre[rt].init();
-    if (l == r) {
-        to_tree_id[l] = rt;//找到每个位置对应的是dfn树上的哪个位置
+    if (l == r)
+    {
+        to_tree_id[l] = rt; // 找到每个位置对应的是dfn线段树上的哪个位置
+        //就是底部的哪个位置，用以找lca
         return;
     }
     int mid = (l + r) >> 1;
     build(rt << 1, l, mid);
     build(rt << 1 | 1, mid + 1, r);
 }
-void modify(int rt, int l, int r, int pos, ll x){
+void modify(int rt, int l, int r, int pos, int x)
+{
     if (rt % 2 != 0)
         hamel_suf[rt].insert(x, pos);
     else
         hamel_pre[rt].insert(x, pos);
-    if (l == r) 
+    if (l == r)
         return;
     int mid = (l + r) >> 1;
-    if (pos <= mid) modify(rt << 1, l, mid, pos, x);
-    else modify(rt << 1 | 1, mid + 1, r, pos, x);
+    if (pos <= mid)
+        modify(rt << 1, l, mid, pos, x);
+    else
+        modify(rt << 1 | 1, mid + 1, r, pos, x);
 }
-int getlca(int x, int y){
-    //cout<<"x="<<x<<" lg2="<<lg2[x^y]<<"\n";
+int getlca(int x, int y)
+{
+    // cout<<"x="<<x<<" lg2="<<lg2[x^y]<<"\n";
     return x >> lg2[x ^ y];
 }
-ll ansp[K], ansp_[K];
-ll getans(int u, ll k){
-    for (int i = K - 1;i >= 0;--i) ansp[i] = ansp_[i] = 0;
-    if (dfn[u] == dfn[u] + sz[u] - 1){
-        if (to_tree_id[dfn[u]] % 2 != 0){
-            for (int i = K - 1;i >= 0;--i)
-            if (hamel_suf[to_tree_id[dfn[u]]].p[i] <= dfn[u] + sz[u] - 1) ansp[i] = hamel_suf[to_tree_id[dfn[u]]].t[i];
-        }else{
-            for (int i = K - 1;i >= 0;--i)
-            if (hamel_pre[to_tree_id[dfn[u]]].p[i] >= dfn[u]) ansp[i] = hamel_pre[to_tree_id[dfn[u]]].t[i];
+int ansp[K], ansp_[K];
+int getans(int u, int k)
+{
+    for (int i = K - 1; i >= 0; --i)
+        ansp[i] = ansp_[i] = 0;
+    if (dfn[u] == dfn[u] + sz[u] - 1)
+    {
+        if (to_tree_id[dfn[u]] % 2 != 0)
+        {
+            for (int i = K - 1; i >= 0; --i)
+                if (hamel_suf[to_tree_id[dfn[u]]].p[i] <= dfn[u] + sz[u] - 1)
+                    ansp[i] = hamel_suf[to_tree_id[dfn[u]]].t[i];
         }
-    }else{
-        int lca = getlca(to_tree_id[dfn[u]], to_tree_id[dfn[u] + sz[u] - 1]);   //是to_tree_id的线段树值对应的lcp
-        //cout<<"lca = "<<lca<<'\n';
-        for (int i = K - 1;i >= 0;--i){
-            if (hamel_pre[lca << 1].p[i] >= dfn[u]) ansp[i] =  hamel_pre[lca << 1].t[i];
+        else
+        {
+            for (int i = K - 1; i >= 0; --i)
+                if (hamel_pre[to_tree_id[dfn[u]]].p[i] >= dfn[u])
+                    ansp[i] = hamel_pre[to_tree_id[dfn[u]]].t[i];
         }
-        for (int i = K - 1;i >= 0;--i){
-            if (hamel_suf[lca << 1 | 1].p[i] <= dfn[u] + sz[u] - 1){
-                ll x = hamel_suf[lca << 1 | 1].t[i];
-                for (int j = K - 1;j >= 0; --j)
-                if ((x >> j) & 1){
-                    if (!ansp[j]) {
-                        ansp[j] = x;
-                        break;
+    }
+    else
+    {
+        int lca = getlca(to_tree_id[dfn[u]], to_tree_id[dfn[u] + sz[u] - 1]); // 是to_tree_id的线段树值对应的lcp
+        // cout<<"lca = "<<lca<<'\n';
+        for (int i = K - 1; i >= 0; --i)
+        {
+            if (hamel_pre[lca << 1].p[i] >= dfn[u])
+                ansp[i] = hamel_pre[lca << 1].t[i];
+        }
+        for (int i = K - 1; i >= 0; --i)
+        {
+            if (hamel_suf[lca << 1 | 1].p[i] <= dfn[u] + sz[u] - 1)
+            {
+                int x = hamel_suf[lca << 1 | 1].t[i];
+                for (int j = K - 1; j >= 0; --j)
+                    if ((x >> j) & 1)
+                    {
+                        if (!ansp[j])
+                        {
+                            ansp[j] = x;
+                            break;
+                        }
+                        else
+                            x ^= ansp[j];
                     }
-                    else x ^= ansp[j];
-                }
             }
         }
     }
     int tot = 0;
-    for (int i = 0;i < K;++i){
-        for (int j = i - 1;j >= 0;--j)
-        if ((ansp[i] >> j) & 1) ansp[i] ^= ansp[j];
+    for (int i = 0; i < K; ++i)
+    {
+        for (int j = i - 1; j >= 0; --j)
+            if ((ansp[i] >> j) & 1)
+                ansp[i] ^= ansp[j];
         if (ansp[i])
             ansp_[tot++] = ansp[i];
     }
-    if ((1ll << tot) <= k) return -1;
-    ll ans = 0;
-    for (int i = 0;i < tot;++i){
+    if ((1ll << tot) <= k)
+        return -1;
+    int ans = 0;
+    for (int i = 0; i < tot; ++i)
+    {
         if ((k >> i) & 1)
             ans ^= ansp_[i];
     }
     return ans;
 }
-void solve(){
-    cin>>n>>m;
+void solve()
+{
+    cin >> n >> m;
     tim = 0;
-	for (int i = 1; i <= n; ++i)
+    for (int i = 1; i <= n; ++i)
         e[i].clear();
-    for (int i = 1;i < n;++i) {
+    for (int i = 1; i < n; ++i)
+    {
         int x, y;
-        cin>>x>>y;
+        cin >> x >> y;
         e[x].push_back(y);
-		e[y].push_back(x);
+        e[y].push_back(x);
     }
     dfs(1, 0);
-    //for (int i = 1;i <= n;++i) cout<<"dfn="<<dfn[i]<<' '<<"sz="<<sz[i]<<'\n';cout<<'\n';
-    n = (1ll << lg2[n]);//cout<<"n = "<<n<<'\n';//补成二的幂
+    // for (int i = 1;i <= n;++i) cout<<"dfn="<<dfn[i]<<' '<<"sz="<<sz[i]<<'\n';cout<<'\n';
+    n = (1ll << lg2[n]); // cout<<"n = "<<n<<'\n';//补成二的幂
     build(1, 1, n);
-    while (m--) {
+    while (m--)
+    {
         int op;
-        cin>>op;
-        if (op == 1){
-            int u;ll x;
-            cin>>u>>x;
+        cin >> op;
+        if (op == 1)
+        {
+            int u;
+            int x;
+            cin >> u >> x;
             modify(1, 1, n, dfn[u], x);
-        }else{
-            int u;ll k;
-            cin>>u>>k;
-            cout<<getans(u, k)<<'\n';
+        }
+        else
+        {
+            int u;
+            int k;
+            cin >> u >> k;
+            cout << getans(u, k) << '\n';
         }
     }
 }
-int main() {
+int main()
+{
     ios::sync_with_stdio(false);
-    cin.tie(0);cout.tie(0);
-    //clock_t c1 = clock();
-    lg2[0] = 0;lg2[1] = 1;
-    for (int i = 2;i <= N - 10;++i) lg2[i] = lg2[i >> 1] + 1;
-    int T = 1;cin>>T;
-    while (T--){
+    cin.tie(0);
+    cout.tie(0);
+    // clock_t c1 = clock();
+    lg2[0] = 0;
+    lg2[1] = 1;
+    for (int i = 2; i <= N - 10; ++i)
+        lg2[i] = lg2[i >> 1] + 1;
+    int T = 1;
+    cin >> T;
+    while (T--)
+    {
         solve();
     }
-    //cerr << "Time Used:" << clock() - c1 << "ms" << endl;
+    // cerr << "Time Used:" << clock() - c1 << "ms" << endl;
     return 0;
 }

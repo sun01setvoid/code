@@ -1,0 +1,1 @@
+{"name":"Local: kmp","url":"e:\\code\\all\\c\\program_algorithm\\string\\kmp\\simple\\kmp.cpp","tests":[{"id":1760587381406,"input":"aab\nabaabcac","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"e:\\code\\all\\c\\program_algorithm\\string\\kmp\\simple\\kmp.cpp","group":"local","local":true}

@@ -1,23 +1,12 @@
 ﻿#include <bits/stdc++.h>
 using namespace std;
 #define endl '\n'
-#define rep(i, st, en) for (int i = (st); i <= (en); ++i)
-#define drep(i, st, en) for (int i = (st); i >= (en); --i)
-#define repn(i, st, en) for (int i = (st); i < (en); ++i)
-#define drepn(i, st, en) for (int i = (st); i > (en); --i)
-#define debug(x) cerr << #x << '=' << (x) << endl
-#define vdebug(a)         \
-    cout << #a << "=[";   \
-    for (auto x : a)      \
-        cout << x << " "; \
-    cout << "]\n"
 #define int long long
 #define ld long double
 #define vii vector<int>
 #define pii pair<int, int>
 #define pb push_back
-#define lb lower_bound
-#define ub upper_bound
+#define debug(x) cerr << #x << '=' << (x) << endl
 #define IOS                      \
     ios::sync_with_stdio(false); \
     cin.tie(0)
@@ -40,7 +29,8 @@ void add(int a, int b, int c)
 bool bfs()
 {
     int hh = 0, tt = -1;
-    rep(i,0,n) d[i]=-1;
+    for (int i = 0; i <= n; i++)
+        d[i] = -1;
     q[++tt] = S, d[S] = 0, cur[S] = h[S];
     while (hh <= tt)
     {
@@ -60,43 +50,52 @@ bool bfs()
     }
     return false;
 }
-int find(int u,int limit){
-    if (u==T) return limit;
-    int flow=0;
-    for (int i=cur[u];~i && flow<limit;i=ne[i]){
-        cur[u]=i;   // 当前弧优化
-        int ver=e[i];
-        if (d[ver]==d[u]+1 && f[i]){
-            int t=find(ver,min(f[i],limit-flow));
-            if (!t) d[ver]=-1;
-            f[i]-=t,f[i^1]+=t,flow+=t;
+int find(int u, int limit)
+{
+    if (u == T)
+        return limit;
+    int flow = 0;
+    for (int i = cur[u]; ~i && flow < limit; i = ne[i])
+    {
+        cur[u] = i; // 当前弧优化
+        int ver = e[i];
+        if (d[ver] == d[u] + 1 && f[i])
+        {
+            int t = find(ver, min(f[i], limit - flow));
+            if (!t)
+                d[ver] = -1;
+            f[i] -= t, f[i ^ 1] += t, flow += t;
         }
     }
     return flow;
 }
 int dinic()
 {
-    int r=0,flow;
-    while (bfs()) while (flow=find(S,INF)) r+=flow;
-    return r; 
+    int r = 0, flow;
+    while (bfs())
+        while (flow = find(S, INF))
+            r += flow;
+    return r;
 }
 void solve()
 {
-    cin>>n>>m>>S>>T;
-    rep(i,0,n) h[i]=-1;
-    idx=0;
-    rep(i,0,m-1){
-        int a,b,c;
-        cin>>a>>b>>c;
-        add(a,b,c);
+    cin >> n >> m >> S >> T;
+    for (int i = 0; i <= n; i++)
+        h[i] = -1;
+    idx = 0;
+    for (int i = 0; i <= m - 1; i++)
+    {
+        int a, b, c;
+        cin >> a >> b >> c;
+        add(a, b, c);
     }
-    cout<<dinic()<<endl;
+    cout << dinic() << endl;
 }
 signed main()
 {
     IOS;
     int _ = 1;
-    //cin >> _;
+    // cin >> _;
     while (_--)
     {
         solve();

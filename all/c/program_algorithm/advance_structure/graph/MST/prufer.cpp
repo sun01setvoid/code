@@ -1,4 +1,5 @@
-﻿#include <bits/stdc++.h>
+﻿//最小生成树prufer序列 标记最小生成树n^(n-2)种
+#include <bits/stdc++.h>
 using namespace std;
 #define endl '\n'
 #define IOS                      \

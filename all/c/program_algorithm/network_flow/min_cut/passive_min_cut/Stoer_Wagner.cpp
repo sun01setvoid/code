@@ -1,4 +1,6 @@
-﻿#include <cstring>
+﻿//无源汇最小割
+
+#include <cstring>
 #include <iostream>
 using namespace std;
 constexpr int N = 601;
